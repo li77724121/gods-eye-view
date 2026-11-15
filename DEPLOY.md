@@ -20,12 +20,17 @@
 
 ## 本机的部署方式
 
+代码放在 `~/sites/gods-eye-view`（**不要**放 `~/Desktop` 下：macOS 的 TCC 会拒绝 launchd
+访问 Desktop，服务会以 `Operation not permitted` 启动失败）。
+
 ```bash
 # Node 要求 24.14+（本机用 brew 的 node@24）
 export PATH=/opt/homebrew/opt/node@24/bin:$PATH
 npm ci --include=dev        # 注意：NODE_ENV=production 会跳过 devDependencies，导致 vite 不存在
 ./scripts/start-public.sh   # HOST=127.0.0.1 PORT=4190 GEV_ALLOWED_HOSTS=gev.one1.kdns.fr
 ```
+
+开机自启由 `~/Library/LaunchAgents/com.leo.gev.plist` 负责（KeepAlive）。
 
 Cloudflare Tunnel 里对应的一条 ingress：
 
